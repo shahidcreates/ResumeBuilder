@@ -20,6 +20,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 public class AuthResponse {
+
     long id;
     private String name;
     private String email;

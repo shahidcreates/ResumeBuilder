@@ -31,3 +31,24 @@ build/
 
 ### VS Code ###
 .vscode/
+
+
+# Logs
+*.log
+logs/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment / sensitive
+.env
+application.properties
+application.yml
+
+# Compiled
+*.class
+
+# Node (future React frontend)
+node_modules/
+dist/

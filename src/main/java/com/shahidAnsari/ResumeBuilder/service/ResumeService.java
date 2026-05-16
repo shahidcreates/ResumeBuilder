@@ -94,15 +94,87 @@ public class ResumeService {
                 orElseThrow(()->new RuntimeException("Resume not found"));
 
         //3. update the new data
+//        existingResume.setTitle(updatedData.getTitle());
+//        existingResume.setPersonalDetails(updatedData.getPersonalDetails());
+//        existingResume.setExperiences(updatedData.getExperiences());
+//        existingResume.setEducations(updatedData.getEducations());
+//        existingResume.setProjects(updatedData.getProjects());
+//        existingResume.setCertifications(updatedData.getCertifications());
+//        existingResume.setSkills(updatedData.getSkills());
+//        existingResume.setLanguages(updatedData.getLanguages());
+//        existingResume.setUpdatedAt(LocalDateTime.now());
+
+        // 3. Update basic fields
         existingResume.setTitle(updatedData.getTitle());
-        existingResume.setPersonalDetails(updatedData.getPersonalDetails());
-        existingResume.setExperiences(updatedData.getExperiences());
-        existingResume.setEducations(updatedData.getEducations());
-        existingResume.setProjects(updatedData.getProjects());
-        existingResume.setCertifications(updatedData.getCertifications());
-        existingResume.setSkills(updatedData.getSkills());
-        existingResume.setLanguages(updatedData.getLanguages());
         existingResume.setUpdatedAt(LocalDateTime.now());
+
+        // =========================
+        // Personal Details
+        // =========================
+        if (updatedData.getPersonalDetails() != null) {
+            updatedData.getPersonalDetails().setResume(existingResume);
+            existingResume.setPersonalDetails(updatedData.getPersonalDetails());
+        }
+
+        // =========================
+        // Educations
+        // =========================
+        if (updatedData.getEducations() != null) {
+            updatedData.getEducations().forEach(education ->
+                    education.setResume(existingResume));
+
+            existingResume.setEducations(updatedData.getEducations());
+        }
+
+        // =========================
+        // Experiences
+        // =========================
+        if (updatedData.getExperiences() != null) {
+            updatedData.getExperiences().forEach(experience ->
+                    experience.setResume(existingResume));
+
+            existingResume.setExperiences(updatedData.getExperiences());
+        }
+
+        // =========================
+        // Skills
+        // =========================
+        if (updatedData.getSkills() != null) {
+            updatedData.getSkills().forEach(skill ->
+                    skill.setResume(existingResume));
+
+            existingResume.setSkills(updatedData.getSkills());
+        }
+
+        // =========================
+        // Projects
+        // =========================
+        if (updatedData.getProjects() != null) {
+            updatedData.getProjects().forEach(project ->
+                    project.setResume(existingResume));
+
+            existingResume.setProjects(updatedData.getProjects());
+        }
+
+        // =========================
+        // Certifications
+        // =========================
+        if (updatedData.getCertifications() != null) {
+            updatedData.getCertifications().forEach(certification ->
+                    certification.setResume(existingResume));
+
+            existingResume.setCertifications(updatedData.getCertifications());
+        }
+
+        // =========================
+        // Languages
+        // =========================
+        if (updatedData.getLanguages() != null) {
+            updatedData.getLanguages().forEach(language ->
+                    language.setResume(existingResume));
+
+            existingResume.setLanguages(updatedData.getLanguages());
+        }
 
         //4. save the detail
         resumeRepository.save(existingResume);

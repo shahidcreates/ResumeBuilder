@@ -35,6 +35,7 @@ public class AuthService {
         if(userRepository.existsByEmail(request.getEmail())){
             throw new ResourceExistsExcepton("User already exists with this email");
         }
+
         User newUser = toUserEntity(request);
         userRepository.save(newUser);
         sendVerificationEmail(newUser);
@@ -87,6 +88,7 @@ public class AuthService {
           user.setCreatedAt(LocalDateTime.now());
           return user;
     }
+
     public void verifyEmail(String token){
         log.info("Inside AuthService: verifyEmail(): {}",token);
         User user = userRepository.findByVerificationToken(token)
@@ -101,6 +103,7 @@ public class AuthService {
     }
 
     public AuthResponse login(LoginRequest request){
+
         User existingUser = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(()->new UsernameNotFoundException("Invalid email or password"));
         if(!passwordEncoder.matches(request.getPassword(),existingUser.getPassword())){
@@ -112,6 +115,7 @@ public class AuthService {
         }
 
         String token = jwtUtil.generateToken(String.valueOf(existingUser.getId()));
+
         AuthResponse response = toResponse(existingUser);
         response.setToken(token);
         return response;

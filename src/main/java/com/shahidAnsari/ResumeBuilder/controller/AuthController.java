@@ -61,7 +61,7 @@ public class AuthController {
             summary = "REST API for Email Verification",
             description = "API for email verify"
     )
-    @GetMapping(VERIFY_EMAIL)
+    @GetMapping(VERIFY_EMAIL) // later after frontend user direct to Login Page.
     public ResponseEntity<?> verifyEmail(@RequestParam String token){
         log.info("Inside AuthController - verifyEmail(): {}",token);
         authService.verifyEmail(token);
