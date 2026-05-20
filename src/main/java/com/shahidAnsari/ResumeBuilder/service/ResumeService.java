@@ -93,26 +93,19 @@ public class ResumeService {
         Resume existingResume = resumeRepository.findByUserIdAndId(response.getId(),resumeId).
                 orElseThrow(()->new RuntimeException("Resume not found"));
 
-        //3. update the new data
-//        existingResume.setTitle(updatedData.getTitle());
-//        existingResume.setPersonalDetails(updatedData.getPersonalDetails());
-//        existingResume.setExperiences(updatedData.getExperiences());
-//        existingResume.setEducations(updatedData.getEducations());
-//        existingResume.setProjects(updatedData.getProjects());
-//        existingResume.setCertifications(updatedData.getCertifications());
-//        existingResume.setSkills(updatedData.getSkills());
-//        existingResume.setLanguages(updatedData.getLanguages());
-//        existingResume.setUpdatedAt(LocalDateTime.now());
-
         // 3. Update basic fields
         existingResume.setTitle(updatedData.getTitle());
         existingResume.setUpdatedAt(LocalDateTime.now());
+
+        //3. update the new data
 
         // =========================
         // Personal Details
         // =========================
         if (updatedData.getPersonalDetails() != null) {
+
             updatedData.getPersonalDetails().setResume(existingResume);
+
             existingResume.setPersonalDetails(updatedData.getPersonalDetails());
         }
 
@@ -120,60 +113,72 @@ public class ResumeService {
         // Educations
         // =========================
         if (updatedData.getEducations() != null) {
-            updatedData.getEducations().forEach(education ->
-                    education.setResume(existingResume));
+            existingResume.getEducations().clear();
 
-            existingResume.setEducations(updatedData.getEducations());
+            updatedData.getEducations().forEach(education -> {
+                education.setResume(existingResume);
+                existingResume.getEducations().add(education);
+            });
         }
 
         // =========================
         // Experiences
         // =========================
         if (updatedData.getExperiences() != null) {
-            updatedData.getExperiences().forEach(experience ->
-                    experience.setResume(existingResume));
+            existingResume.getExperiences().clear();
 
-            existingResume.setExperiences(updatedData.getExperiences());
+            updatedData.getExperiences().forEach(experience -> {
+                experience.setResume(existingResume);
+                existingResume.getExperiences().add(experience);
+            });
         }
 
         // =========================
         // Skills
         // =========================
         if (updatedData.getSkills() != null) {
-            updatedData.getSkills().forEach(skill ->
-                    skill.setResume(existingResume));
+            existingResume.getSkills().clear();
 
-            existingResume.setSkills(updatedData.getSkills());
+            updatedData.getSkills().forEach(skill -> {
+                skill.setResume(existingResume);
+                existingResume.getSkills().add(skill);
+            });
         }
 
         // =========================
         // Projects
         // =========================
         if (updatedData.getProjects() != null) {
-            updatedData.getProjects().forEach(project ->
-                    project.setResume(existingResume));
+            existingResume.getProjects().clear();
 
-            existingResume.setProjects(updatedData.getProjects());
+            updatedData.getProjects().forEach(project -> {
+                project.setResume(existingResume);
+                existingResume.getProjects().add(project);
+            });
         }
 
         // =========================
         // Certifications
         // =========================
         if (updatedData.getCertifications() != null) {
-            updatedData.getCertifications().forEach(certification ->
-                    certification.setResume(existingResume));
+            existingResume.getCertifications().clear();
 
-            existingResume.setCertifications(updatedData.getCertifications());
+            updatedData.getCertifications().forEach(certification -> {
+                certification.setResume(existingResume);
+                existingResume.getCertifications().add(certification);
+            });
         }
 
         // =========================
         // Languages
         // =========================
         if (updatedData.getLanguages() != null) {
-            updatedData.getLanguages().forEach(language ->
-                    language.setResume(existingResume));
+            existingResume.getLanguages().clear();
 
-            existingResume.setLanguages(updatedData.getLanguages());
+            updatedData.getLanguages().forEach(language -> {
+                language.setResume(existingResume);
+                existingResume.getLanguages().add(language);
+            });
         }
 
         //4. save the detail
