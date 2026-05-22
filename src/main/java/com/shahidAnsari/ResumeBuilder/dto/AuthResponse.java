@@ -28,6 +28,7 @@ public class AuthResponse {
     private boolean emailVarified;
     private String token;
 
+    private String role;
     @CreatedDate
     private LocalDateTime createdAt;
     @LastModifiedDate

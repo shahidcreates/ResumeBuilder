@@ -20,8 +20,9 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
-
     private String name;
+
+    @Column(unique = true)
     private String email;
     private String password;
 
@@ -29,6 +30,11 @@ public class User {
     private boolean emailVerified = false;
     private String verificationToken;
     private LocalDateTime verificationExpires;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    private boolean enabled = true;
 
     @CreatedDate
     private LocalDateTime createdAt;

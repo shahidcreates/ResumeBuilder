@@ -45,6 +45,7 @@ Thumbs.db
 .env
 src/main/resources/application.properties
 src/main/resources/application.yml
+src/main/resources/data.sql
 
 # Compiled
 *.class

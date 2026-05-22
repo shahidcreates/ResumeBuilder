@@ -40,10 +40,17 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http.cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf-> csrf.disable())     //       /** means all accept after /actuator
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/api/auth/register",
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(
+                                "/api/auth/register",
                                 "/api/auth/login","/api/auth/verify-email","/api/auth/upload-image",
-                                "/actuator/**","/api/auth/resend-verification").permitAll()
-                        .requestMatchers("swagger-ui/**","/v3/api-docs/**","/swagger-ui.html").permitAll()
+                                "/actuator/**","/api/auth/resend-verification"
+                        ).permitAll()
+                        .requestMatchers(
+                                "/swagger-ui/**","/v3/api-docs/**","/swagger-ui.html"
+                        ).permitAll()
+                        .requestMatchers("/api/admin/**")
+                        .hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
@@ -53,15 +60,6 @@ public class SecurityConfig {
 
     }
 
-//    @Bean
-//    public UserDetailsService userDetailsService(){
-//        UserDetails admin = User.builder()
-//                .username("admin")
-//                .password(passwordEncoder().encode("admin"))
-//                .roles("ADMIN")
-//                .build();
-//        return new InMemoryUserDetailsManager(admin);
-//    }
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource(){

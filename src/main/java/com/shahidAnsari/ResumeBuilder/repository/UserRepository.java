@@ -1,5 +1,6 @@
 package com.shahidAnsari.ResumeBuilder.repository;
 
+import com.shahidAnsari.ResumeBuilder.entity.Role;
 import com.shahidAnsari.ResumeBuilder.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -11,4 +12,6 @@ public interface UserRepository extends JpaRepository<User,Long> {
 
     boolean existsByEmail(String email);
     Optional<User>findByVerificationToken(String verificationToken);
+
+    Long countByRole(Role role);
 }

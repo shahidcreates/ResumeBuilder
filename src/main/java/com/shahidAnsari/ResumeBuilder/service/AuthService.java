@@ -3,6 +3,7 @@ package com.shahidAnsari.ResumeBuilder.service;
 import com.shahidAnsari.ResumeBuilder.dto.AuthResponse;
 import com.shahidAnsari.ResumeBuilder.dto.LoginRequest;
 import com.shahidAnsari.ResumeBuilder.dto.RegisterRequest;
+import com.shahidAnsari.ResumeBuilder.entity.Role;
 import com.shahidAnsari.ResumeBuilder.entity.User;
 import com.shahidAnsari.ResumeBuilder.exception.ResourceExistsExcepton;
 import com.shahidAnsari.ResumeBuilder.repository.UserRepository;
@@ -37,6 +38,8 @@ public class AuthService {
         }
 
         User newUser = toUserEntity(request);
+
+        newUser.setRole(Role.USER);
         userRepository.save(newUser);
         sendVerificationEmail(newUser);
         return toResponse(newUser);
@@ -105,9 +108,10 @@ public class AuthService {
     public AuthResponse login(LoginRequest request){
 
         User existingUser = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(()->new UsernameNotFoundException("Invalid email or password"));
+                .orElseThrow(()->new UsernameNotFoundException("Invalid email"));
+
         if(!passwordEncoder.matches(request.getPassword(),existingUser.getPassword())){
-            throw new UsernameNotFoundException("Invalid email or password");
+            throw new UsernameNotFoundException("Invalid password");
         }
 
         if(!existingUser.isEmailVerified()){
