@@ -41,7 +41,7 @@ public class AuthService {
 
         newUser.setRole(Role.USER);
         userRepository.save(newUser);
-        sendVerificationEmail(newUser);
+//        sendVerificationEmail(newUser);
         return toResponse(newUser);
 
     }
@@ -114,8 +114,12 @@ public class AuthService {
             throw new UsernameNotFoundException("Invalid password");
         }
 
-        if(!existingUser.isEmailVerified()){
-            throw new RuntimeException("Please verify your email before logging in.");
+//        if(!existingUser.isEmailVerified()){
+//            throw new RuntimeException("Please verify your email before logging in.");
+//        }
+
+        if(!existingUser.isEnabled()){
+            throw new RuntimeException("You are block by admin");
         }
 
         String token = jwtUtil.generateToken(String.valueOf(existingUser.getId()));

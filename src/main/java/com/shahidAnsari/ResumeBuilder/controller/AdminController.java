@@ -1,119 +1,52 @@
 package com.shahidAnsari.ResumeBuilder.controller;
-
-import com.shahidAnsari.ResumeBuilder.entity.Role;
 import com.shahidAnsari.ResumeBuilder.entity.User;
-import com.shahidAnsari.ResumeBuilder.repository.UserRepository;
-
+import com.shahidAnsari.ResumeBuilder.service.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import static com.shahidAnsari.ResumeBuilder.util.AppConstants.*;
 
 @RestController
-@RequestMapping("/api/admin")
+@RequestMapping(ADMIN)
 @RequiredArgsConstructor
 public class AdminController {
 
-    private final UserRepository userRepository;
+    private final AdminService adminService;
 
-    @GetMapping("/users")
-    public List<User> getAllUsers(){
-
-        return userRepository.findAll();
+    @GetMapping(ALL_USERS)
+    public List<User> getUsers(){
+        return adminService.getAllUsers();
     }
 
-    @DeleteMapping("/users/{id}")
+
+    @DeleteMapping(USER_BY_ID)
     public String deleteUser(@PathVariable Long id){
-
-        userRepository.deleteById(id);
-
-        return "User Deleted";
+        return adminService.deleteUser(id);
     }
 
-    @GetMapping("/users/{id}")
+    @GetMapping(USER_BY_ID)
     public User getUserById(@PathVariable Long id){
-
-        return userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        return adminService.getUserById(id);
     }
 
-    @PutMapping("/users/{id}/role")
+    @PutMapping(USER_ROLE)
     public String updateRole(@PathVariable Long id, @RequestBody Map<String,String> body){
-
-        User user = userRepository.findById(id)
-                .orElseThrow(
-                        () -> new RuntimeException(
-                                "User not found"
-                        )
-                );
-
-        user.setRole(
-                Role.valueOf(body.get("role"))
-        );
-
-        userRepository.save(user);
-
-        return "Role Updated";
+        return adminService.updateUserRole(id,body);
     }
 
-    @PutMapping("/users/{id}/disable")
-    public String disableUser(
-            @PathVariable Long id){
-
-        User user = userRepository.findById(id)
-                .orElseThrow(
-                        () -> new RuntimeException(
-                                "User not found"
-                        )
-                );
-
-        user.setEnabled(false);
-
-        userRepository.save(user);
-
-        return "User Disabled";
+    @PutMapping(USER_DISABLE)
+    public String disableUser(@PathVariable Long id){
+        return adminService.disableUser(id);
     }
 
-    @PutMapping("/users/{id}/enable")
-    public String enableUser(
-            @PathVariable Long id){
-
-        User user = userRepository.findById(id)
-                .orElseThrow(
-                        () -> new RuntimeException(
-                                "User not found"
-                        )
-                );
-
-        user.setEnabled(true);
-
-        userRepository.save(user);
-
-        return "User Enabled";
+    @PutMapping(USER_ENABLE)
+    public String enableUser(@PathVariable Long id){
+        return adminService.enableUser(id);
     }
 
-    @GetMapping("/stats")
+    @GetMapping(STATS)
     public Map<String,Long> stats(){
-
-        Map<String,Long> data = new HashMap<>();
-
-        data.put(
-                "totalUsers",
-                userRepository.count()
-        );
-
-        data.put(
-                "admins",
-                userRepository.countByRole(Role.ADMIN)
-        );
-
-        data.put(
-                "normalUsers",
-                userRepository.countByRole(Role.USER)
-        );
-
-        return data;
+        return adminService.stats();
     }
 }

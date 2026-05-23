@@ -16,4 +16,12 @@ public class AppConstants {
 
 
     public static final String TEMPLATES="/api/templates";
+
+    public static final String ADMIN ="/api/admin";
+    public static final String ALL_USERS ="/users";
+    public static final String USER_BY_ID ="/users/{id}";
+    public static final String USER_ROLE ="/users/{id}/role";
+    public static final String USER_ENABLE ="/users/{id}/enable";
+    public static final String USER_DISABLE ="/users/{id}/disable";
+    public static final String STATS ="/stats";
 }
