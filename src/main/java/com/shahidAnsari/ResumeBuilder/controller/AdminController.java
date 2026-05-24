@@ -57,5 +57,22 @@ public class AdminController {
         return ResponseEntity.ok(adminService.stats());
     }
 
+    // GET RESUMES
+    @GetMapping("/resumes")
+    public ResponseEntity<?> resumes() {
+        return ResponseEntity.ok(adminService.getResumes());
+    }
+
+    // DASHBOARD
+    @GetMapping("/dashboard")
+    public ResponseEntity<?> dashboard() {
+        return ResponseEntity.ok(adminService.dashboard());
+    }
+
+    // count user resumes
+    @GetMapping("/users/{userId}/resume-count")
+    public ResponseEntity<?> getUserResumeCount(@PathVariable Long userId) {
+        return ResponseEntity.ok(adminService.getUserResumeCount(userId));
+    }
 
 }

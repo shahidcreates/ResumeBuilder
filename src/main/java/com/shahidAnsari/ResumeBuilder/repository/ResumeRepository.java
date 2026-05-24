@@ -12,4 +12,7 @@ public interface ResumeRepository extends JpaRepository<Resume,Long> {
     List<Resume> findByUserIdOrderByUpdatedAtDesc(Long userId);
 
     Optional<Resume>findByUserIdAndId(Long userId, Long id);
+
+    long countByUserId(Long userId);
+
 }

@@ -1,7 +1,11 @@
 package com.shahidAnsari.ResumeBuilder.service;
 
+import com.shahidAnsari.ResumeBuilder.dto.AdminDashboardDto;
+import com.shahidAnsari.ResumeBuilder.dto.UserResumeStatsDto;
+import com.shahidAnsari.ResumeBuilder.entity.Resume;
 import com.shahidAnsari.ResumeBuilder.entity.Role;
 import com.shahidAnsari.ResumeBuilder.entity.User;
+import com.shahidAnsari.ResumeBuilder.repository.ResumeRepository;
 import com.shahidAnsari.ResumeBuilder.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +20,7 @@ import java.util.Map;
 @Slf4j
 public class AdminService {
     private final UserRepository userRepository;
+    private final ResumeRepository resumeRepository;
     private final AuthService authService;
 
     //get Users
@@ -77,6 +82,42 @@ public class AdminService {
         data.put("normalUsers", userRepository.countByRole(Role.USER));
 
         return data;
+    }
+
+    //get all resume
+    public List<Resume> getResumes() {
+        List<Resume> resumes = resumeRepository.findAll();
+        if(resumes.isEmpty()){
+            throw new RuntimeException("No resumes found");
+        }
+        return resumes;
+    }
+
+    // DASHBOARD
+    public AdminDashboardDto dashboard() {
+
+        return new AdminDashboardDto(
+                userRepository.count(),
+                resumeRepository.count(),
+                userRepository.countByRole(Role.ADMIN),
+                userRepository.countByRole(Role.USER)
+        );
+    }
+
+    // Count resume by user
+    public UserResumeStatsDto getUserResumeCount(Long userId) {
+
+        User user = userRepository.findById(userId).orElseThrow(() ->
+                new RuntimeException("User not found"));
+
+        long resumeCount = resumeRepository.countByUserId(userId);
+
+        return new UserResumeStatsDto(
+                user.getId(),
+                user.getName(),
+                user.getEmail(),
+                resumeCount
+        );
     }
 
 }
