@@ -2,6 +2,7 @@ package com.shahidAnsari.ResumeBuilder.controller;
 import com.shahidAnsari.ResumeBuilder.entity.User;
 import com.shahidAnsari.ResumeBuilder.service.AdminService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
@@ -14,39 +15,47 @@ public class AdminController {
 
     private final AdminService adminService;
 
+    // get all user
     @GetMapping(ALL_USERS)
-    public List<User> getUsers(){
-        return adminService.getAllUsers();
+    public ResponseEntity<?> getUsers() {
+        return ResponseEntity.ok(adminService.getAllUsers());
     }
 
-
+    // delete user by id
     @DeleteMapping(USER_BY_ID)
-    public String deleteUser(@PathVariable Long id){
-        return adminService.deleteUser(id);
+    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
+        return ResponseEntity.ok(adminService.deleteUser(id));
     }
 
+    // get user by id
     @GetMapping(USER_BY_ID)
-    public User getUserById(@PathVariable Long id){
-        return adminService.getUserById(id);
+    public ResponseEntity<?> getUser(@PathVariable Long id) {
+        return ResponseEntity.ok(adminService.getUserById(id));
     }
 
+    // change user Role
     @PutMapping(USER_ROLE)
-    public String updateRole(@PathVariable Long id, @RequestBody Map<String,String> body){
-        return adminService.updateUserRole(id,body);
+    public ResponseEntity<?> updateRole(@PathVariable Long id, @RequestBody Map<String,String> body) {
+        return ResponseEntity.ok(adminService.updateUserRole(id, body));
     }
 
+    // Block user
     @PutMapping(USER_DISABLE)
-    public String disableUser(@PathVariable Long id){
-        return adminService.disableUser(id);
+    public ResponseEntity<?> disableUser(@PathVariable Long id) {
+        return ResponseEntity.ok(adminService.disableUser(id));
     }
 
+    // Unblock user
     @PutMapping(USER_ENABLE)
-    public String enableUser(@PathVariable Long id){
-        return adminService.enableUser(id);
+    public ResponseEntity<?> enableUser(@PathVariable Long id){
+        return ResponseEntity.ok(adminService.enableUser(id));
     }
 
+    // STATS
     @GetMapping(STATS)
-    public Map<String,Long> stats(){
-        return adminService.stats();
+    public ResponseEntity<?> stats() {
+        return ResponseEntity.ok(adminService.stats());
     }
+
+
 }
