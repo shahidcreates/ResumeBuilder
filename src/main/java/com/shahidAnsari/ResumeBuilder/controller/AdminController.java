@@ -1,4 +1,5 @@
 package com.shahidAnsari.ResumeBuilder.controller;
+import com.shahidAnsari.ResumeBuilder.dto.UserResumeStatsDto;
 import com.shahidAnsari.ResumeBuilder.entity.User;
 import com.shahidAnsari.ResumeBuilder.service.AdminService;
 import lombok.RequiredArgsConstructor;
@@ -58,21 +59,26 @@ public class AdminController {
     }
 
     // GET RESUMES
-    @GetMapping("/resumes")
+    @GetMapping(ALL_RESUMES)
     public ResponseEntity<?> resumes() {
         return ResponseEntity.ok(adminService.getResumes());
     }
 
     // DASHBOARD
-    @GetMapping("/dashboard")
+    @GetMapping(DASHBOARD)
     public ResponseEntity<?> dashboard() {
         return ResponseEntity.ok(adminService.dashboard());
     }
 
     // count user resumes
-    @GetMapping("/users/{userId}/resume-count")
+    @GetMapping(USER_RESUMES)
     public ResponseEntity<?> getUserResumeCount(@PathVariable Long userId) {
         return ResponseEntity.ok(adminService.getUserResumeCount(userId));
     }
 
+    // get user resumes stats
+    @GetMapping(USER_RESUMES_STATS)
+    public List<UserResumeStatsDto> getUserResumeStats() {
+        return adminService.getUserResumeStats();
+    }
 }

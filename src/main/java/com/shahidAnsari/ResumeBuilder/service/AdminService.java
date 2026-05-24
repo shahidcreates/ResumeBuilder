@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -120,4 +121,25 @@ public class AdminService {
         );
     }
 
+    // get all user resume stats
+    public List<UserResumeStatsDto> getUserResumeStats() {
+
+        List<Object[]> rows = userRepository.getUserResumeStats();
+
+        List<UserResumeStatsDto> response = new ArrayList<>();
+
+        for (Object[] row : rows) {
+
+            response.add(
+                    new UserResumeStatsDto(
+                            ((Number) row[0]).longValue(),
+                            (String) row[1],
+                            (String) row[2],
+                            ((Number) row[3]).longValue()
+                    )
+            );
+        }
+
+        return response;
+    }
 }
