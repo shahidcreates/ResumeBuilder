@@ -3,9 +3,7 @@ package com.shahidAnsari.ResumeBuilder.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -29,6 +27,16 @@ public class Resume {
     @Column(unique = true)
     private String shareToken;
     private boolean isPublic = false;
+
+    @Column(unique = true)
+    private String shareSlug;
+
+    @Column(nullable = false)
+    private Long views = 0L;
+    @Column(nullable = false)
+    private Long downloads = 0L;
+
+    private LocalDateTime sharedAt;
 
     @CreatedDate
     private LocalDateTime createdAt;

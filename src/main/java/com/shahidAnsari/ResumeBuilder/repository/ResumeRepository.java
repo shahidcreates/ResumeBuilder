@@ -17,4 +17,8 @@ public interface ResumeRepository extends JpaRepository<Resume,Long> {
 
     Optional<Resume> findByShareToken(String shareToken);
 
+    Optional<Resume> findByShareSlug(String slug);
+
+    boolean existsByShareSlug(String slug);
+
 }
