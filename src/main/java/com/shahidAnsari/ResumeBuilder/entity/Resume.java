@@ -26,6 +26,10 @@ public class Resume {
     private String title;
     private String thumbnailLink;
 
+    @Column(unique = true)
+    private String shareToken;
+    private boolean isPublic = false;
+
     @CreatedDate
     private LocalDateTime createdAt;
 

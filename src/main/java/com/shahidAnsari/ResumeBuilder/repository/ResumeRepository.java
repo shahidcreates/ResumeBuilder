@@ -15,4 +15,6 @@ public interface ResumeRepository extends JpaRepository<Resume,Long> {
 
     long countByUserId(Long userId);
 
+    Optional<Resume> findByShareToken(String shareToken);
+
 }
