@@ -10,6 +10,8 @@ import org.springframework.context.annotation.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.time.LocalDateTime;
+
 @Configuration
 @RequiredArgsConstructor
 public class AdminConfig {
@@ -25,6 +27,7 @@ public class AdminConfig {
                 User admin = new User();
                 admin.setName("Admin");
                 admin.setEmail("admin@gmail.com");
+                admin.setCreatedAt(LocalDateTime.now());
                 admin.setPassword(
                         encoder.encode("admin123")
                 );

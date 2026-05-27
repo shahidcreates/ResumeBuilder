@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -53,6 +54,7 @@ public class AdminService {
     public String updateUserRole(Long id, Map<String,String> body) {
         User user = getUserById(id);
         user.setRole(Role.valueOf(body.get("role")));
+        user.setUpdatedAt(LocalDateTime.now());
         userRepository.save(user);
         return "Role Updated";
     }
@@ -61,6 +63,7 @@ public class AdminService {
     public String disableUser(Long id) {
         User user = getUserById(id);
         user.setEnabled(false);
+        user.setUpdatedAt(LocalDateTime.now());
         userRepository.save(user);
         return "User disable";
     }
@@ -69,6 +72,7 @@ public class AdminService {
     public String enableUser(Long id) {
         User user = getUserById(id);
         user.setEnabled(true);
+        user.setUpdatedAt(LocalDateTime.now());
         userRepository.save(user);
         return "User enable";
     }

@@ -89,6 +89,7 @@ public class AuthService {
           user.setVerificationToken(UUID.randomUUID().toString());
           user.setVerificationExpires(LocalDateTime.now().plusHours(24));
           user.setCreatedAt(LocalDateTime.now());
+          user.setUpdatedAt(LocalDateTime.now());
           return user;
     }
 

@@ -40,6 +40,7 @@ public class ResumeService {
         // update the resume object
         newResume.setUser(user);
         newResume.setTitle(request.getTitle());
+        newResume.setCreatedAt(LocalDateTime.now());
 
         // set default data for resume
         setDefaultResumeData(newResume);
