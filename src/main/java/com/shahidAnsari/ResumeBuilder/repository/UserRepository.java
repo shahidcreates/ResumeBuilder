@@ -23,7 +23,7 @@ public interface UserRepository extends JpaRepository<User,Long> {
             u.name,
             u.email,
             COUNT(r.id) AS resumeCount
-        FROM user u
+        FROM users u
         LEFT JOIN resume r
             ON u.id = r.user_id
         GROUP BY u.id, u.name, u.email
