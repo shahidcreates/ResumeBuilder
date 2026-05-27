@@ -41,7 +41,7 @@ public class AuthService {
 
         newUser.setRole(Role.USER);
         userRepository.save(newUser);
-//        sendVerificationEmail(newUser);
+        sendVerificationEmail(newUser);
         return toResponse(newUser);
 
     }
@@ -52,7 +52,7 @@ public class AuthService {
             String link= appBaseUrl+"/api/auth/verify-email?token="+newUser.getVerificationToken();
             String html = "<div style='font-family:sans-serif'"+
                                 "<h2>Verify your email</h2>" +
-                                "<p>Hi"+newUser.getName()+" ,please conform your email to activate your account. </p>"+
+                                "<p>Hi "+newUser.getName()+" ,please conform your email to activate your account. </p>"+
                                 "<p><a href='"+link+
                                 "' style='display:inline-block;padding:10px 16px;background:#6366F1;color:#fff;border-radius:6px;text-decoration:none'>Verify Email</a></p>"+
                                 "<p>Or copy this link: "+link+" </p>"+
@@ -114,9 +114,9 @@ public class AuthService {
             throw new UsernameNotFoundException("Invalid password");
         }
 
-//        if(!existingUser.isEmailVerified()){
-//            throw new RuntimeException("Please verify your email before logging in.");
-//        }
+        if(!existingUser.isEmailVerified()){
+            throw new RuntimeException("Please verify your email before logging in.");
+        }
 
         if(!existingUser.isEnabled()){
             throw new RuntimeException("You are block by admin");
