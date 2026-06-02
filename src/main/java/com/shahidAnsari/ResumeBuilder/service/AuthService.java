@@ -50,7 +50,7 @@ public class AuthService {
         log.info("Inside AuthService - sendVerificationEmail(): {}",newUser);
         try{
             String link= appBaseUrl+"/api/auth/verify-email?token="+newUser.getVerificationToken();
-            String html = "<div style='font-family:sans-serif'"+
+            String html = "<div style='font-family:sans-serif'>"+
                                 "<h2>Verify your email</h2>" +
                                 "<p>Hi "+newUser.getName()+" ,please conform your email to activate your account. </p>"+
                                 "<p><a href='"+link+
