@@ -16,6 +16,6 @@ public class TemplatesService {
     public List<String> getTemplates(Object principal){
         AuthResponse authResponse = authService.getProfile(principal);
 
-        return List.of("01","02","03");
+        return List.of("01","02");
     }
 }

@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -18,8 +20,18 @@ public class Skills {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String skillName;
-    private String level;
+//    private String skillName;
+//    private String level;
+
+    @ElementCollection
+    private List<String> languages;
+    @ElementCollection
+    private List<String> technicalSkills;
+    @ElementCollection
+    private List<String> developerTools;
+    @ElementCollection
+    private List<String> achievements;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "resume_id")

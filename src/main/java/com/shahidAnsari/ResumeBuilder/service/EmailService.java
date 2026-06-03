@@ -61,7 +61,7 @@ public class EmailService {
 
         Map<String, Object> requestBody = Map.of(
                 "sender", Map.of(
-                        "name", "Resume Builder",
+                        "name", "Resumify",
                         "email", senderEmail
                 ),
                 "to", List.of(

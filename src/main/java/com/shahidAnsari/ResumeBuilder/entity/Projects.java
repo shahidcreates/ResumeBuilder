@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -18,12 +20,13 @@ public class Projects {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String title;
+    private String name; //title;
 
-    @Column(length = 2000)
-    private String description;
+    @ElementCollection
+    private List<String> bullets; //description;
 
-    private String techStack;
+    @ElementCollection
+    private List<String> techStack;
 
     private String link;
 

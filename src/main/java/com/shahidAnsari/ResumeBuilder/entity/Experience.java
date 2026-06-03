@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
@@ -22,12 +23,14 @@ public class Experience {
 
     private String company;
     private String role;
-    private String address;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    private String location; // address
+    private String startDate;
+    private String endDate;
+    private boolean present;
 
-    @Column(length = 2000)
-    private String description;
+//    @Column(length = 2000)
+    @ElementCollection
+    private List<String> bullets; //description;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "resume_id")

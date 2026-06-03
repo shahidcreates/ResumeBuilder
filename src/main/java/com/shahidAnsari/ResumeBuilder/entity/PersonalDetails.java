@@ -22,10 +22,11 @@ public class PersonalDetails {
     private String profilePreviewUrl;
     private String fullName;
     private String phone;
-    private String address;
+    private String location; //address
     private String linkedin;
     private String github;
     private String website;
+    private String jobRole;
 
     @OneToOne
     @JoinColumn(name = "resume_id")
