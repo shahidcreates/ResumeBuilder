@@ -44,4 +44,14 @@ public class User {
 
     @LastModifiedDate
     private LocalDateTime updatedAt;
+
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @OneToMany(
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    @JsonIgnore
+    private List<Resume> resumes;
 }

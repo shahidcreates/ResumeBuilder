@@ -75,6 +75,7 @@ public class AuthService {
         response.setEmailVarified(newUser.isEmailVerified());
         response.setCreatedAt(newUser.getCreatedAt());
         response.setUpdatedAt(newUser.getUpdatedAt());
+        response.setRole(String.valueOf(newUser.getRole()));
         return response;
 
     }

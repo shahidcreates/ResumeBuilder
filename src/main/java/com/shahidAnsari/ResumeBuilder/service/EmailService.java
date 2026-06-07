@@ -24,8 +24,8 @@ import org.springframework.http.*;
 @Slf4j
 public class EmailService {
 
-    @Value("${spring.mail.properties.mail.smtp.from}")
-    private String fromEmail;
+//    @Value("${spring.mail.properties.mail.smtp.from}")
+//    private String fromEmail;
 
 //    private final JavaMailSender mailSender;
 //

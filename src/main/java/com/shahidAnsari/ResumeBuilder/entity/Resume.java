@@ -22,6 +22,7 @@ public class Resume {
     private Long id;
 
     private String title;
+    private String templateName;
     private String thumbnailLink;
 
     @Column(unique = true)
@@ -67,7 +68,7 @@ public class Resume {
 
     @OneToMany(mappedBy = "resume", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    private List<Skills> skills;
+    private List<Skills> skills;   // List<Skills> ko Skills me change kiya
 
     @OneToMany(mappedBy = "resume", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference

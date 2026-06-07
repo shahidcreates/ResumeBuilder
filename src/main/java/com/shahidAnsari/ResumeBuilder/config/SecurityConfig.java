@@ -47,8 +47,8 @@ public class SecurityConfig {
                 .csrf(csrf-> csrf.disable())     //       /** means all accept after /actuator
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
-                                "/api/auth/register",
-                                "/api/auth/login","/api/auth/verify-email","/api/auth/upload-image",
+                                "/api/auth/register", "/api/auth/login",
+                                "/api/auth/verify-email","/api/auth/upload-image",
                                 "/actuator/**","/api/auth/resend-verification",
                                 "/api/public/**"
                         ).permitAll()
@@ -63,7 +63,6 @@ public class SecurityConfig {
                 .exceptionHandling(ex -> ex.authenticationEntryPoint(new JwtAuthenticationEntryPoint()))
                 .httpBasic(Customizer.withDefaults());
         return http.build();
-
     }
 
 

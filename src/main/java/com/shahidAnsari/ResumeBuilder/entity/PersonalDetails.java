@@ -23,6 +23,7 @@ public class PersonalDetails {
     private String fullName;
     private String phone;
     private String location; //address
+    private String email;
     private String linkedin;
     private String github;
     private String website;
