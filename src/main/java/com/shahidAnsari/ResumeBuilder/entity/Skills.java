@@ -33,7 +33,7 @@ public class Skills {
     private List<String> achievements;
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "resume_id")
     @JsonBackReference
     private Resume resume;

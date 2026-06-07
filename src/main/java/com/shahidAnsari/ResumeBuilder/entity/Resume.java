@@ -66,9 +66,9 @@ public class Resume {
     @JsonManagedReference
     private List<Experience> experiences;
 
-    @OneToMany(mappedBy = "resume", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "resume", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    private List<Skills> skills;   // List<Skills> ko Skills me change kiya
+    private Skills skills;   // List<Skills> ko Skills me change kiya
 
     @OneToMany(mappedBy = "resume", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference

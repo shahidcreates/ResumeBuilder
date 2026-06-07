@@ -54,10 +54,13 @@ public class ResumeService {
         PersonalDetails personalDetails = new PersonalDetails();
         personalDetails.setResume(newResume);
 
+        Skills skills = new Skills();
+        skills.setResume(newResume);
+
         newResume.setPersonalDetails(personalDetails);
         newResume.setEducations(new ArrayList<>());
         newResume.setExperiences(new ArrayList<>());
-        newResume.setSkills(new ArrayList<>());       // before new ArrayList<>() now skills object
+        newResume.setSkills(skills);       // before new ArrayList<>() now skills object
         newResume.setLanguages(new ArrayList<>());
         newResume.setCertifications(new ArrayList<>());
         newResume.setProjects(new ArrayList<>());
@@ -139,12 +142,12 @@ public class ResumeService {
         // Skills
         // =========================
         if (updatedData.getSkills() != null) {
-            existingResume.getSkills().clear();
-
-            updatedData.getSkills().forEach(skill -> {
-                skill.setResume(existingResume);
-                existingResume.getSkills().add(skill);
-            });
+            Skills skills = updatedData.getSkills();
+            if (existingResume.getSkills() != null) {
+                skills.setId(existingResume.getSkills().getId());
+            }
+            skills.setResume(existingResume);
+            existingResume.setSkills(skills);
         }
 
         // =========================
