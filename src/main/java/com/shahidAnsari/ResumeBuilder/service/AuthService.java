@@ -3,6 +3,7 @@ package com.shahidAnsari.ResumeBuilder.service;
 import com.shahidAnsari.ResumeBuilder.dto.AuthResponse;
 import com.shahidAnsari.ResumeBuilder.dto.LoginRequest;
 import com.shahidAnsari.ResumeBuilder.dto.RegisterRequest;
+import com.shahidAnsari.ResumeBuilder.dto.ResetPasswordRequest;
 import com.shahidAnsari.ResumeBuilder.entity.Role;
 import com.shahidAnsari.ResumeBuilder.entity.User;
 import com.shahidAnsari.ResumeBuilder.exception.ResourceExistsExcepton;
@@ -63,6 +64,64 @@ public class AuthService {
             log.error("Exception occurred at sendVerificationEmail(): {}",e.getMessage());
             throw new RuntimeException("Failed to send verification email : "+e.getMessage());
         }
+    }
+    //      Forgot Password Method (OTP Send)
+    public void forgotPassword(String email) {
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        String otp = String.valueOf(
+                (int) ((Math.random() * 900000) + 100000)
+        ); // 6 digit OTP
+
+        user.setResetOtp(otp);
+        user.setResetOtpExpires(LocalDateTime.now().plusMinutes(10));
+
+        userRepository.save(user);
+
+        String html =
+                "<div style='font-family:sans-serif'>" +
+                        "<h2>Password Reset OTP</h2>" +
+                        "<p>Hello " + user.getName() + ",</p>" +
+                        "<p>Your OTP is:</p>" +
+                        "<h1>" + otp + "</h1>" +
+                        "<p>OTP expires in 10 minutes.</p>" +
+                        "</div>";
+
+        emailService.sendHtmlEmail(
+                user.getEmail(),
+                "Password Reset OTP",
+                html
+        );
+    }
+
+    public void resetPassword(ResetPasswordRequest request) {
+
+        User user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        if (user.getResetOtp() == null) {
+            throw new RuntimeException("OTP not found");
+        }
+
+        if (!user.getResetOtp().equals(request.getOtp())) {
+            throw new RuntimeException("Invalid OTP");
+        }
+
+        if (user.getResetOtpExpires() == null ||
+                user.getResetOtpExpires().isBefore(LocalDateTime.now())) {
+            throw new RuntimeException("OTP expired");
+        }
+
+        user.setPassword(
+                passwordEncoder.encode(request.getNewPassword())
+        );
+
+        user.setResetOtp(null);
+        user.setResetOtpExpires(null);
+
+        userRepository.save(user);
     }
 
     //  Entity to Dto
@@ -133,6 +192,7 @@ public class AuthService {
 
 
     public void resendVerification(String email) {
+
         User user = userRepository.findByEmail(email).orElseThrow(()-> new RuntimeException("user not found"));
 
         if(user.isEmailVerified()){

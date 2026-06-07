@@ -3,9 +3,11 @@ package com.shahidAnsari.ResumeBuilder.controller;
 import com.shahidAnsari.ResumeBuilder.dto.AuthResponse;
 import com.shahidAnsari.ResumeBuilder.dto.LoginRequest;
 import com.shahidAnsari.ResumeBuilder.dto.RegisterRequest;
+import com.shahidAnsari.ResumeBuilder.dto.ResetPasswordRequest;
 import com.shahidAnsari.ResumeBuilder.service.AuthService;
 import com.shahidAnsari.ResumeBuilder.service.FileUploadService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -65,9 +67,36 @@ public class AuthController {
     public ResponseEntity<?> verifyEmail(@RequestParam String token){
         log.info("Inside AuthController - verifyEmail(): {}",token);
         authService.verifyEmail(token);
-        return ResponseEntity.status(HttpStatus.OK).body(Map.of("message","Email verified successfully"));
+//        return ResponseEntity.status(HttpStatus.OK).body(Map.of("message","Email verified successfully"));
+        return ResponseEntity.status(HttpStatus.FOUND)
+                .header("Location", "https://resumify-project-1.vercel.app/auth")
+                .build();
     }
 
+    // sent otp
+    @Operation(
+            summary = "Send Password Reset OTP",
+            description = "Enter the registered email address. A 6-digit OTP will be sent to that email."
+    )
+    @PostMapping(FORGOT_PASSWORD)
+    public ResponseEntity<String> forgotPassword(@Parameter(description = "Registered user email address", example = "shahid.ans3001@gmail.com")
+                                                     @RequestParam String email) {
+            log.info("Inside AuthController - forgotPassword(): {}",email);
+            authService.forgotPassword(email);
+            return ResponseEntity.ok("OTP sent successfully");
+    }
+
+    // Verify OTP + Reset Password
+    @Operation(
+            summary = "Reset Password",
+            description = "Verify OTP and set a new password."
+    )
+    @PostMapping(RESET_PASSWORD)
+    public ResponseEntity<String> resetPassword(@RequestBody ResetPasswordRequest request) {
+        log.info("Inside AuthController - resetPassword(): ");
+        authService.resetPassword(request);
+        return ResponseEntity.ok("Password reset successfully");
+    }
 
     @Operation(
             summary = "REST API for Upload image",

@@ -29,6 +29,10 @@ public class User {
     private String email;
     private String password;
 
+    private String resetOtp;
+
+    private LocalDateTime resetOtpExpires;
+
     private String profileImageUrl;
     private boolean emailVerified = false;
     private String verificationToken;

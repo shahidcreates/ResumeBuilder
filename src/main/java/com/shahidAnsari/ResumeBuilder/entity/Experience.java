@@ -29,7 +29,12 @@ public class Experience {
     private boolean present;
 
 //    @Column(length = 2000)
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.LAZY)
+    @CollectionTable(
+            name = "experience_description",
+            joinColumns = @JoinColumn(name = "experience_id")
+    )
+    @Column(name = "description")
     private List<String> bullets; //description;
 
     @ManyToOne(fetch = FetchType.LAZY)

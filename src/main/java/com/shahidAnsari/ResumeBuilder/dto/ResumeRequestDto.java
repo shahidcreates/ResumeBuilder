@@ -12,5 +12,6 @@ import lombok.Data;
 public class ResumeRequestDto {
     @NotBlank(message = "title is required")
     private String title;
+    @NotBlank(message = "templateName is required")
     private String templateName;
 }
