@@ -30,4 +30,5 @@ public class AppConstants {
     public static final String DASHBOARD ="/dashboard";
     public static final String USER_RESUMES ="/users/{userId}/resume-count";
     public static final String USER_RESUMES_STATS ="/users/resume-stats";
+    public static final String RESUMES_MONTH_TRENDS ="/resume-trends/{month}";
 }

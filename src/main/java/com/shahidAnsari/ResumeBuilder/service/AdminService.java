@@ -1,6 +1,7 @@
 package com.shahidAnsari.ResumeBuilder.service;
 
 import com.shahidAnsari.ResumeBuilder.dto.AdminDashboardDto;
+import com.shahidAnsari.ResumeBuilder.dto.ResumeTrendDto;
 import com.shahidAnsari.ResumeBuilder.dto.UserResumeStatsDto;
 import com.shahidAnsari.ResumeBuilder.entity.Resume;
 import com.shahidAnsari.ResumeBuilder.entity.Role;
@@ -140,6 +141,25 @@ public class AdminService {
                             (String) row[1],
                             (String) row[2],
                             ((Number) row[3]).longValue()
+                    )
+            );
+        }
+
+        return response;
+    }
+
+    public List<ResumeTrendDto> getResumeTrends(Integer month) {
+
+        List<Object[]> rows = resumeRepository.getResumeTrendByMonth(month);
+
+        List<ResumeTrendDto> response = new ArrayList<>();
+
+        for (Object[] row : rows) {
+
+            response.add(
+                    new ResumeTrendDto(
+                            ((java.sql.Date) row[0]).toLocalDate(),
+                            ((Number) row[1]).longValue()
                     )
             );
         }

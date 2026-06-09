@@ -1,4 +1,5 @@
 package com.shahidAnsari.ResumeBuilder.controller;
+import com.shahidAnsari.ResumeBuilder.dto.ResumeTrendDto;
 import com.shahidAnsari.ResumeBuilder.dto.UserResumeStatsDto;
 import com.shahidAnsari.ResumeBuilder.entity.User;
 import com.shahidAnsari.ResumeBuilder.service.AdminService;
@@ -149,4 +150,15 @@ public class AdminController {
         return adminService.getUserResumeStats();
     }
 
+    // get resumes month trends
+    @Operation(
+            summary = "Get Resume month trends",
+            description = "Fetch resume creation dates and count of a month "
+    )
+    @GetMapping(RESUMES_MONTH_TRENDS)
+    public List<ResumeTrendDto> getResumeTrends(
+            @PathVariable Integer month) {
+
+        return adminService.getResumeTrends(month);
+    }
 }
