@@ -32,8 +32,12 @@ public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-    @Value("${frontend.url}")
-    private String frontEndUrl;
+    @Value("${frontend.local-url}")
+    private String localUrl;
+
+    @Value("${frontend.prod-url}")
+    private String prodUrl;
+
 
     @Bean
     public PasswordEncoder passwordEncoder(){
@@ -67,10 +71,11 @@ public class SecurityConfig {
     }
 
 
+
     @Bean
     public CorsConfigurationSource corsConfigurationSource(){
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Collections.singletonList(frontEndUrl));// React app host
+        configuration.setAllowedOrigins(Arrays.asList(localUrl,prodUrl));// React app host
         configuration.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE","PATCH","OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(true);
