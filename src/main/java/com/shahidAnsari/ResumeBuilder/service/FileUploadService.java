@@ -47,6 +47,8 @@ public class FileUploadService {
 
         if(Objects.nonNull(thumbnail)){
             uploadResult = uploadSingleImage(thumbnail);
+            log.info("Inside FileUploadService - UploadResumeImage(): {}",uploadResult.get("imageUrl").toString());
+
             existingResume.setThumbnailLink(uploadResult.get("imageUrl"));
             returnValue.put("thumbnailLink",uploadResult.get("imageUrl"));
         }

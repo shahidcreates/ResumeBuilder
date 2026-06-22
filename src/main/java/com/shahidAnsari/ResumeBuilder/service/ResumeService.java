@@ -66,6 +66,7 @@ public class ResumeService {
         newResume.setCertifications(new ArrayList<>());
         newResume.setProjects(new ArrayList<>());
 
+
     }
 
     public List<Resume> getUserResumes(Object principal) {
@@ -102,6 +103,8 @@ public class ResumeService {
         // 3. Update basic fields
         existingResume.setTitle(updatedData.getTitle());
         existingResume.setUpdatedAt(LocalDateTime.now());
+        existingResume.setTemplateName(updatedData.getTemplateName());
+        existingResume.setSummary(updatedData.getSummary());
 
         //3. update the new data
 

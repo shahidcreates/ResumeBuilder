@@ -28,6 +28,7 @@ public class Resume {
     private String title;
     private String templateName;
     private String thumbnailLink;
+    private String summary;
 
     @Column(unique = true)
     private String shareToken;
