@@ -8,7 +8,7 @@ import com.shahidAnsari.ResumeBuilder.repository.ResumeRepository;
 import com.shahidAnsari.ResumeBuilder.util.ShareUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -50,6 +50,7 @@ public class ResumeShareService {
     }
 
     //    Get Public Resume
+    @Transactional(readOnly = true)
     public PublicResumeDto getPublicResume(String slug,String token){
         Resume resume= resumeRepository.findByShareSlug(slug)
                 .orElseThrow(()-> new RuntimeException("Invalid link"));
@@ -144,6 +145,18 @@ public class ResumeShareService {
         return PublicResumeDto.builder()
                 .id(resume.getId())
                 .title(resume.getTitle())
+                .templateName(resume.getTemplateName())
+                .thumbnailLink(resume.getThumbnailLink())
+                .summary(resume.getSummary())
+
+                .personalDetails(resume.getPersonalDetails())
+                .educations(resume.getEducations())
+                .experiences(resume.getExperiences())
+                .skills(resume.getSkills())
+                .projects(resume.getProjects())
+                .certifications(resume.getCertifications())
+                .languages(resume.getLanguages())
+
                 .views(resume.getViews())
                 .downloads(resume.getDownloads())
                 .build();
